@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo da velha</title>
+
+  <style>
+    body{
+      margin: 0;
+      font-size: 'segoe UI';
+      min-height: 100vh;
+      align-content: center;
+
+    }
+    body div{
+      margin: 0 auto;
+      width: fit-content;
+    }
+    .row{
+      width: fit-content;
+      display: flex;
+    }
+    .row div{
+      width: 80px;
+      height: 80px;
+      font-size: 2em;
+      border: 1px solid black;
+      align-content: center;
+      text-align: center;
+    }
+    p{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="status">
+    <p id="quemJoga"></p>
+    <p style="margin: 0;">Pontuação</p>
+    <p style="margin: 0;">X &nbsp;|&nbsp; O</p>
+    <p id="pontuacao">0 - 0</p>
+  </div>
+  <div id="campoJogo">
+    <div class="row">
+      <div class="slot" onclick="clicar(0)"></div>
+      <div class="slot" onclick="clicar(1)"></div>
+      <div class="slot" onclick="clicar(2)"></div>
+    </div>
+    <div class="row">
+      <div class="slot" onclick="clicar(3)"></div>
+      <div class="slot" onclick="clicar(4)"></div>
+      <div class="slot" onclick="clicar(5)"></div>
+    </div>
+    <div class="row">
+      <div class="slot" onclick="clicar(6)"></div>
+      <div class="slot" onclick="clicar(7)"></div>
+      <div class="slot" onclick="clicar(8)"></div>
+    </div>
+  </div>
+  <div>
+    <br>
+    <button onclick="jogar()" id="btnJogar">JOGAR</button>
+    <button onclick="reiniciar()" disabled id="btnReiniciar">REINICIAR</button>
+  </div>
+
+  <script>
+    const slot = document.getElementsByClassName("slot")
+    var isX = true
+    var jogando = false
+
+    //EM PROGRESSO (manipular empate)
+    var jogada = 0
+    var pontuacaoX = 0
+    var pontuacaoO = 0
+
+    function jogar(){
+      reiniciar()
+      jogada = 0
+      document.getElementById("quemJoga").innerHTML = 'Vez do "X" jogar!'
+      document.getElementById("campoJogo").style.backgroundColor = "transparent"
+
+      
+      document.getElementById("btnJogar").disabled = true
+      document.getElementById("btnReiniciar").disabled = false
+      jogando = true
+      isX = true
+    }
+
+    function reiniciar(){
+      for(let i = 0; i < slot.length; i++){
+        slot[i].innerHTML = ""
+        document.getElementById("campoJogo").style.backgroundColor = "#dddddd"
+      }
+      document.getElementById("btnJogar").disabled = false
+      document.getElementById("btnReiniciar").disabled = true
+
+    }
+    
+    function clicar(nChild){
+      if(jogando == false){
+        return
+      }
+
+      var element = slot[nChild]
+      if(element.innerHTML == ""){
+        if(isX){
+          element.innerHTML = "X"
+          document.getElementById("quemJoga").innerHTML = 'Vez do "O" jogar!'
+        } else{
+          element.innerHTML = "O"
+          document.getElementById("quemJoga").innerHTML = 'Vez do "X" jogar!'
+        }
+        verificarX()
+        verificarY()
+        verificarDiagonal()
+        isX = !isX
+        
+        jogada++
+        if(jogada == 9 && jogando){
+          empate()
+        }
+      }
+    }
+
+    function verificarX(){
+      for(let i = 0; i < 9; i+=3){
+        var texto = slot[i].innerHTML
+        if(texto == ""){
+          continue
+        }
+        if(slot[i].innerHTML == texto && slot[i+1].innerHTML == texto && slot[i+2].innerHTML == texto){
+          quemGanhou()
+        }
+      }
+    }
+    function verificarY(){
+      for(let i = 0; i < 3; i++){
+        var texto = slot[i].innerHTML
+        if(texto == ""){
+          continue
+        }
+        if(slot[i].innerHTML == texto && slot[i+3].innerHTML == texto && slot[i+6].innerHTML == texto){
+          quemGanhou()
+        }
+      }
+    }
+
+    function verificarDiagonal(){
+      var texto = slot[0].innerHTML
+      if(!texto == ""){
+        if(slot[0].innerHTML == texto && slot[4].innerHTML == texto && slot[8].innerHTML == texto){
+          quemGanhou()
+        }
+      }
+      var texto = slot[2].innerHTML
+      if(!texto == ""){
+        if(slot[2].innerHTML == texto && slot[4].innerHTML == texto && slot[6].innerHTML == texto){
+          quemGanhou()
+        }
+      }
+    }
+
+    function quemGanhou(){
+      if(isX){
+        alert("X VENCEU!!!")
+        pontuacaoX++
+      } else{
+        alert("O VENCEU!!!")
+        pontuacaoO++
+      } 
+      atualizarPontuacao()
+      jogando = false
+
+      document.getElementById("btnJogar").disabled = false
+      document.getElementById("btnReiniciar").disabled = true
+      
+    }
+
+    function empate(){
+      alert("Empate! :(")
+      jogando = false
+
+      document.getElementById("btnJogar").disabled = true
+      document.getElementById("btnReiniciar").disabled = false
+      document.getElementById("quemJoga").innerHTML = ''
+
+    }
+
+    function atualizarPontuacao(){
+      document.getElementById("pontuacao").innerHTML = `${pontuacaoX} - ${pontuacaoO}`
+    }
+
+    reiniciar()
+  </script>
+</body>
+</html>
