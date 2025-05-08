@@ -1,44 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jogo da velha</title>
-
-  <style>
-    body{
-      margin: 0;
-      font-size: 'segoe UI';
-      min-height: 100vh;
-      align-content: center;
-
-    }
-    body div{
-      margin: 0 auto;
-      width: fit-content;
-    }
-    .row{
-      width: fit-content;
-      display: flex;
-    }
-    .row div{
-      width: 80px;
-      height: 80px;
-      font-size: 2em;
-      border: 1px solid black;
-      align-content: center;
-      text-align: center;
-    }
-    p{
-      text-align: center;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <div id="status">
-    <p id="quemJoga"></p>
+    <p id="quemJoga">Vez do Hornet jogar!</p>
     <p style="margin: 0;">Pontuação</p>
-    <p style="margin: 0;">X &nbsp;|&nbsp; O</p>
+    <p id="pontuacaoTexto" style="margin: 0;">Hornet &nbsp;|&nbsp; Lace</p>
     <p id="pontuacao">0 - 0</p>
   </div>
   <div id="campoJogo">
@@ -69,129 +43,127 @@
     var isX = true
     var jogando = false
 
-    //EM PROGRESSO (manipular empate)
     var jogada = 0
     var pontuacaoX = 0
     var pontuacaoO = 0
 
-    function jogar(){
+    function jogar() {
+      document.getElementById("quemJoga").style.opacity = "1";
       reiniciar()
       jogada = 0
-      document.getElementById("quemJoga").innerHTML = 'Vez do "X" jogar!'
+      document.getElementById("quemJoga").innerHTML = 'Vez do Hornet jogar!'
       document.getElementById("campoJogo").style.backgroundColor = "transparent"
 
-      
       document.getElementById("btnJogar").disabled = true
       document.getElementById("btnReiniciar").disabled = false
       jogando = true
       isX = true
     }
 
-    function reiniciar(){
-      for(let i = 0; i < slot.length; i++){
+    function reiniciar() {
+      for (let i = 0; i < slot.length; i++) {
         slot[i].innerHTML = ""
-        document.getElementById("campoJogo").style.backgroundColor = "#dddddd"
       }
       document.getElementById("btnJogar").disabled = false
       document.getElementById("btnReiniciar").disabled = true
-
     }
-    
-    function clicar(nChild){
-      if(jogando == false){
+
+    function clicar(nChild) {
+      if (jogando == false) {
         return
       }
 
       var element = slot[nChild]
-      if(element.innerHTML == ""){
-        if(isX){
-          element.innerHTML = "X"
-          document.getElementById("quemJoga").innerHTML = 'Vez do "O" jogar!'
-        } else{
-          element.innerHTML = "O"
-          document.getElementById("quemJoga").innerHTML = 'Vez do "X" jogar!'
+      if (element.innerHTML == "") {
+        if (isX) {
+          element.innerHTML = '<img src="img/hornet.png" class="icone">';
+          document.getElementById("quemJoga").innerHTML = 'Vez de <strong>Lace</strong> jogar!';
+        } else {
+          element.innerHTML = '<img src="img/lace.png" class="icone">';
+          document.getElementById("quemJoga").innerHTML = 'Vez de <strong>Hornet</strong> jogar!';
         }
+
         verificarX()
         verificarY()
         verificarDiagonal()
         isX = !isX
-        
+
         jogada++
-        if(jogada == 9 && jogando){
+        if (jogada == 9 && jogando) {
           empate()
         }
       }
     }
 
-    function verificarX(){
-      for(let i = 0; i < 9; i+=3){
+    function verificarX() {
+      for (let i = 0; i < 9; i += 3) {
         var texto = slot[i].innerHTML
-        if(texto == ""){
+        if (texto == "") {
           continue
         }
-        if(slot[i].innerHTML == texto && slot[i+1].innerHTML == texto && slot[i+2].innerHTML == texto){
+        if (slot[i].innerHTML == texto && slot[i + 1].innerHTML == texto && slot[i + 2].innerHTML == texto) {
           quemGanhou()
         }
       }
     }
-    function verificarY(){
-      for(let i = 0; i < 3; i++){
+    function verificarY() {
+      for (let i = 0; i < 3; i++) {
         var texto = slot[i].innerHTML
-        if(texto == ""){
+        if (texto == "") {
           continue
         }
-        if(slot[i].innerHTML == texto && slot[i+3].innerHTML == texto && slot[i+6].innerHTML == texto){
+        if (slot[i].innerHTML == texto && slot[i + 3].innerHTML == texto && slot[i + 6].innerHTML == texto) {
           quemGanhou()
         }
       }
     }
 
-    function verificarDiagonal(){
+    function verificarDiagonal() {
       var texto = slot[0].innerHTML
-      if(!texto == ""){
-        if(slot[0].innerHTML == texto && slot[4].innerHTML == texto && slot[8].innerHTML == texto){
+      if (!texto == "") {
+        if (slot[0].innerHTML == texto && slot[4].innerHTML == texto && slot[8].innerHTML == texto) {
           quemGanhou()
         }
       }
       var texto = slot[2].innerHTML
-      if(!texto == ""){
-        if(slot[2].innerHTML == texto && slot[4].innerHTML == texto && slot[6].innerHTML == texto){
+      if (!texto == "") {
+        if (slot[2].innerHTML == texto && slot[4].innerHTML == texto && slot[6].innerHTML == texto) {
           quemGanhou()
         }
       }
     }
 
-    function quemGanhou(){
-      if(isX){
-        alert("X VENCEU!!!")
-        pontuacaoX++
-      } else{
-        alert("O VENCEU!!!")
-        pontuacaoO++
-      } 
-      atualizarPontuacao()
-      jogando = false
-
-      document.getElementById("btnJogar").disabled = false
-      document.getElementById("btnReiniciar").disabled = true
-      
+    function quemGanhou() {
+      if (isX) {
+        alert("Hornet venceu!");
+        document.getElementById("quemJoga").style.opacity = "0"
+        pontuacaoX++;
+      } else {
+        alert("Lace venceu!");
+        document.getElementById("quemJoga").style.opacity = "0"
+        pontuacaoO++;
+      }
+      atualizarPontuacao();
+      jogando = false;
+      document.getElementById("btnJogar").disabled = false;
+      document.getElementById("btnReiniciar").disabled = true;
     }
 
-    function empate(){
+    function empate() {
       alert("Empate! :(")
       jogando = false
 
       document.getElementById("btnJogar").disabled = true
       document.getElementById("btnReiniciar").disabled = false
-      document.getElementById("quemJoga").innerHTML = ''
-
+      document.getElementById("quemJoga").style.opacity = "0"
     }
 
-    function atualizarPontuacao(){
+    function atualizarPontuacao() {
       document.getElementById("pontuacao").innerHTML = `${pontuacaoX} - ${pontuacaoO}`
     }
 
     reiniciar()
   </script>
 </body>
+
 </html>

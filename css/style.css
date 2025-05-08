@@ -1,0 +1,82 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #393C5E;
+  color: #f0f0f0;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#status {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#status p {
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.row {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.slot {
+  width: 80px;
+  height: 80px;
+  background-color: #4e4b7b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  margin: 2px;
+}
+
+.slot:hover {
+  background-color: #6c66a1;
+  transform: scale(1.05);
+}
+
+.icone {
+  width: 60px;
+  height: 60px;
+}
+
+button {
+  margin: 10px;
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #5b598d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #6c66a1;
+  transform: scale(1.05);
+}
+
+#pontuacao {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffcd00;
+  margin-top: 10px;
+}
+
+#quemJoga {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #ffcd00;
+  font-weight: 500;
+  opacity: calc(0);
+}
