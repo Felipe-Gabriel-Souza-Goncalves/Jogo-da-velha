@@ -1,7 +1,9 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: url(./img/background.png) #393C5E;
+  background: url(../img/background.png) #393C5E;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-position: -20px -10px;
   color: #f0f0f0;
   min-height: 90vh;
