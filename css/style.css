@@ -1,12 +1,20 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #393C5E;
+  background: url(/img/background.png) #393C5E;
+  background-size: cover;
+  background-position: -20px -10px;
   color: #f0f0f0;
   min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+main{
+  text-align: center;
+  background-color: #393c5e80;
+  padding: 15px 50px;
+  border-radius: 10%;
 }
 
 #status {
@@ -19,7 +27,11 @@ body {
   margin-bottom: 8px;
   font-weight: 600;
 }
-
+#campoJogo{
+  background-color: #393C5E;
+  width: fit-content;
+  margin: 0 auto;
+}
 .row {
   width: fit-content;
   display: flex;
@@ -28,6 +40,7 @@ body {
 }
 
 .slot {
+  box-sizing: border-box;
   width: 80px;
   height: 80px;
   background-color: #4e4b7b;
@@ -37,11 +50,17 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease-in-out;
   margin: 2px;
+  border: 2px solid transparent;
 }
 
 .slot:hover {
   background-color: #6c66a1;
   transform: scale(1.05);
+}
+
+.slotsVencedores{
+  background-color: #636094;
+  border: 2px solid rgb(18, 207, 119);
 }
 
 .icone {
@@ -64,6 +83,13 @@ button {
 button:hover {
   background-color: #6c66a1;
   transform: scale(1.05);
+}
+button:disabled{
+  color: rgb(168, 165, 175);
+  background-color: #464569;
+}
+button:disabled:hover{
+  transform: none;
 }
 
 #pontuacao {

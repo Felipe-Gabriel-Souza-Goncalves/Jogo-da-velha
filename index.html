@@ -9,37 +9,42 @@
 </head>
 
 <body>
-  <div id="status">
-    <p id="quemJoga">Vez do Hornet jogar!</p>
-    <p style="margin: 0;">Pontuação</p>
-    <p id="pontuacaoTexto" style="margin: 0;">Hornet &nbsp;|&nbsp; Lace</p>
-    <p id="pontuacao">0 - 0</p>
-  </div>
-  <div id="campoJogo">
-    <div class="row">
-      <div class="slot" onclick="clicar(0)"></div>
-      <div class="slot" onclick="clicar(1)"></div>
-      <div class="slot" onclick="clicar(2)"></div>
+  <main>
+    <div id="status">
+      <p id="quemJoga">Vez do Hornet jogar!</p>
+      <p style="margin: 0;">Pontuação</p>
+      <p id="pontuacaoTexto" style="margin: 0;">Hornet &nbsp;|&nbsp; Lace</p>
+      <p id="pontuacao">0 - 0</p>
     </div>
-    <div class="row">
-      <div class="slot" onclick="clicar(3)"></div>
-      <div class="slot" onclick="clicar(4)"></div>
-      <div class="slot" onclick="clicar(5)"></div>
+    <div id="campoJogo">
+      <div class="row">
+        <div class="slot" onclick="clicar(0)"></div>
+        <div class="slot" onclick="clicar(1)"></div>
+        <div class="slot" onclick="clicar(2)"></div>
+      </div>
+      <div class="row">
+        <div class="slot" onclick="clicar(3)"></div>
+        <div class="slot" onclick="clicar(4)"></div>
+        <div class="slot" onclick="clicar(5)"></div>
+      </div>
+      <div class="row">
+        <div class="slot" onclick="clicar(6)"></div>
+        <div class="slot" onclick="clicar(7)"></div>
+        <div class="slot" onclick="clicar(8)"></div>
+      </div>
     </div>
-    <div class="row">
-      <div class="slot" onclick="clicar(6)"></div>
-      <div class="slot" onclick="clicar(7)"></div>
-      <div class="slot" onclick="clicar(8)"></div>
+    <div>
+      <br>
+      <button onclick="jogar()" id="btnJogar">JOGAR</button>
+      <button onclick="reiniciar()" disabled id="btnReiniciar">REINICIAR</button>
     </div>
-  </div>
-  <div>
-    <br>
-    <button onclick="jogar()" id="btnJogar">JOGAR</button>
-    <button onclick="reiniciar()" disabled id="btnReiniciar">REINICIAR</button>
-  </div>
+  </main>
+  
 
   <script>
+
     const slot = document.getElementsByClassName("slot")
+    const slotsVencedores = document.getElementsByClassName("slotsVencedores")
     var isX = true
     var jogando = false
 
@@ -49,10 +54,15 @@
 
     function jogar() {
       document.getElementById("quemJoga").style.opacity = "1";
+
       reiniciar()
+
       jogada = 0
-      document.getElementById("quemJoga").innerHTML = 'Vez do Hornet jogar!'
-      document.getElementById("campoJogo").style.backgroundColor = "transparent"
+      document.getElementById("quemJoga").innerHTML = 'Vez de Hornet jogar!'
+
+      for(let i = slotsVencedores.length-1; i > -1; i--){
+        slotsVencedores[i].classList.remove("slotsVencedores")
+      }
 
       document.getElementById("btnJogar").disabled = true
       document.getElementById("btnReiniciar").disabled = false
@@ -66,6 +76,9 @@
       }
       document.getElementById("btnJogar").disabled = false
       document.getElementById("btnReiniciar").disabled = true
+      document.getElementById("quemJoga").innerText = " "
+      
+      jogando = false
     }
 
     function clicar(nChild) {
@@ -102,7 +115,7 @@
           continue
         }
         if (slot[i].innerHTML == texto && slot[i + 1].innerHTML == texto && slot[i + 2].innerHTML == texto) {
-          quemGanhou()
+          quemGanhou(i, i+1, i+2)
         }
       }
     }
@@ -113,7 +126,7 @@
           continue
         }
         if (slot[i].innerHTML == texto && slot[i + 3].innerHTML == texto && slot[i + 6].innerHTML == texto) {
-          quemGanhou()
+          quemGanhou(i, i+3, i+6)
         }
       }
     }
@@ -122,25 +135,27 @@
       var texto = slot[0].innerHTML
       if (!texto == "") {
         if (slot[0].innerHTML == texto && slot[4].innerHTML == texto && slot[8].innerHTML == texto) {
-          quemGanhou()
+          quemGanhou(0, 4, 8)
         }
       }
       var texto = slot[2].innerHTML
       if (!texto == "") {
         if (slot[2].innerHTML == texto && slot[4].innerHTML == texto && slot[6].innerHTML == texto) {
-          quemGanhou()
+          quemGanhou(2,4,6)
         }
       }
     }
 
-    function quemGanhou() {
-      if (isX) {
-        alert("Hornet venceu!");
-        document.getElementById("quemJoga").style.opacity = "0"
+    function quemGanhou(i1, i2, i3) {
+      slot[i1].classList.add("slotsVencedores")
+      slot[i2].classList.add("slotsVencedores")
+      slot[i3].classList.add("slotsVencedores")
+
+      if (isX) { //Hornet
+        document.getElementById("quemJoga").innerText = "Hornet venceu!"
         pontuacaoX++;
-      } else {
-        alert("Lace venceu!");
-        document.getElementById("quemJoga").style.opacity = "0"
+      } else { //Lace
+        document.getElementById("quemJoga").innerText = "Lace venceu!"
         pontuacaoO++;
       }
       atualizarPontuacao();
@@ -150,7 +165,6 @@
     }
 
     function empate() {
-      alert("Empate! :(")
       jogando = false
 
       document.getElementById("btnJogar").disabled = true
