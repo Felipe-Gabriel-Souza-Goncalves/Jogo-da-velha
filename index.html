@@ -9,6 +9,11 @@
 </head>
 
 <body>
+
+  <header>
+    <h1>Bem-vindo ao jogo da Velha!</h1>
+  </header>
+
   <main>
     <div id="status">
       <p id="quemJoga">Vez do Hornet jogar!</p>
@@ -39,7 +44,7 @@
       <button onclick="reiniciar()" disabled id="btnReiniciar">REINICIAR</button>
     </div>
   </main>
-  
+
 
   <script>
 
@@ -60,7 +65,7 @@
       jogada = 0
       document.getElementById("quemJoga").innerHTML = 'Vez de Hornet jogar!'
 
-      for(let i = slotsVencedores.length-1; i > -1; i--){
+      for (let i = slotsVencedores.length - 1; i > -1; i--) {
         slotsVencedores[i].classList.remove("slotsVencedores")
       }
 
@@ -77,7 +82,7 @@
       document.getElementById("btnJogar").disabled = false
       document.getElementById("btnReiniciar").disabled = true
       document.getElementById("quemJoga").innerText = " "
-      
+
       jogando = false
     }
 
@@ -115,7 +120,7 @@
           continue
         }
         if (slot[i].innerHTML == texto && slot[i + 1].innerHTML == texto && slot[i + 2].innerHTML == texto) {
-          quemGanhou(i, i+1, i+2)
+          quemGanhou(i, i + 1, i + 2)
         }
       }
     }
@@ -126,7 +131,7 @@
           continue
         }
         if (slot[i].innerHTML == texto && slot[i + 3].innerHTML == texto && slot[i + 6].innerHTML == texto) {
-          quemGanhou(i, i+3, i+6)
+          quemGanhou(i, i + 3, i + 6)
         }
       }
     }
@@ -141,7 +146,7 @@
       var texto = slot[2].innerHTML
       if (!texto == "") {
         if (slot[2].innerHTML == texto && slot[4].innerHTML == texto && slot[6].innerHTML == texto) {
-          quemGanhou(2,4,6)
+          quemGanhou(2, 4, 6)
         }
       }
     }
@@ -178,6 +183,22 @@
 
     reiniciar()
   </script>
+
+  <footer>
+    <section>
+      <p>Github dos desenvolvedores</p>
+      <div id="desenvolvedores">
+        <a target="_blank" href="https://github.com/FelipeGSG">FelipeGSG</a>
+      </div>
+      <div id="desenvolvedores">
+        <a target="_blank" href="https://github.com/GuilhSchneider">GuilhSchneider</a>
+      </div>
+    </section>
+    <section>
+      <p>Projeto educacional <br> SENAI Nami Jafet</p>
+    </section>
+
+  </footer>
 </body>
 
 </html>
