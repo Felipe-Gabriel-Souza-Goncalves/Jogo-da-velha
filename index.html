@@ -171,10 +171,10 @@
 
     function empate() {
       jogando = false
-
+      document.getElementById("quemJoga").innerText = "Empate!"
       document.getElementById("btnJogar").disabled = true
       document.getElementById("btnReiniciar").disabled = false
-      document.getElementById("quemJoga").style.opacity = "0"
+      document.getElementById("quemJoga").style.opacity = "1"
     }
 
     function atualizarPontuacao() {
